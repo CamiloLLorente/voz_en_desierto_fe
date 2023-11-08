@@ -1,0 +1,21 @@
+$breakpoint-tablet: 768px;
+$breakpoint-mobile: 480px;
+
+.header{
+    background: #003755;
+    padding: .7rem 0;
+    display: flex;
+   display: flex;
+   justify-content:center;
+}
+
+@media screen and (max-width: $breakpoint-tablet) {
+   
+}
+
+// Media query para teléfono móvil
+@media screen and (max-width: $breakpoint-mobile) {
+    
+}
+
+
