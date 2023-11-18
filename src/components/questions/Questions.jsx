@@ -1,11 +1,38 @@
-import React from 'react';
+import { useState, useEffect } from "react";
+import { useGlobalState } from "../../context/GlobalState";
+import style from "./questions.module.scss";
+import Question from "../question/Question";
 
-function Questions(props) {
+function Questions() {
+
+    const useGlobalStateSurvey = useGlobalState();
+    
+    useEffect(() => {
+        
+        useGlobalStateSurvey.getSurvey();
+    }, []);
+
+            
     return (
-        <div>
-            Questions
-        </div>
+        <>
+            {
+                useGlobalStateSurvey.survey?.map((survey,i) =>{       
+                    return (
+                        <div className={style.questions} key={i}>
+                           <Question survey={survey} />
+                        </div>
+        
+                    )
+                })      
+             }
+                
+        </>
+
+       
     );
+              
+        
+  
 }
 
 export default Questions;

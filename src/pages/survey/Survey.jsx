@@ -1,11 +1,14 @@
-import React from 'react';
-import Questions from '../questions/Questions';
+import Questions from '../../components/questions/Questions';
+import style from "./survey.module.scss";
 
-function Survey(props) {
+function Survey() {
+   
+    
+   
+
     return (
-        <div>
-            vistaSurvey
-            <Questions />
+        <div className={style.survey}>
+          <Questions />
         </div>
     );
 }
