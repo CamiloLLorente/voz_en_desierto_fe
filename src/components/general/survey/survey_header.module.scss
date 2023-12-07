@@ -1,0 +1,26 @@
+.survey_header{
+    background-color: #F4F4F4;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+}
+.p{
+    margin-bottom: 2rem;
+    font-size:2.4rem;
+    
+}
+.info{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.stars{
+    display: flex;
+}
+.description_star{
+    width:10px;
+}
+.star_info{
+    padding: 1rem 1.2rem;
+}
