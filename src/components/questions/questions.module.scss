@@ -1,8 +1,28 @@
+.grid_questions{
+    background-color: #F4F4F4;
+    padding:1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    justify-content: center;
+    align-items: center;
+    
+}
+
+@media (min-width: 992px) {
+    /* Estilos para pantallas más grandes (escritorios) */
+    .grid_questions{
+        
+        grid-template-columns: repeat(3, 1fr);
+        
+    }
+}
 .questions{
-    background-color:red ;
     padding: 2rem;
+    display: flex;
+    flex-direction: column;
     justify-items: center; /* Centra en el eje horizontal */
     align-items: center; /* Centra en el eje vertical */
     
 }
+
 

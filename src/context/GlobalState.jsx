@@ -3,7 +3,8 @@ import AppReducer from "./AppReducer";
 import axios from "axios";
 
 const initialState = {
-  survey: [],
+  questions: [],
+  selectedAnswers: [],
 };
 
 export const Context = createContext(initialState);
@@ -18,25 +19,39 @@ export const useGlobalState = () => {
 export const GlobalProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
 
-  const getSurvey = async () => {
-    try {
-      const res = await axios.get("https://run.mocky.io/v3/133672d3-cdea-490c-8585-4f826d9ef8c1");
-      const data = res.data.data.questions;
-      console.log(data);
-      dispatch({ type: "GET_SURVEY", payload: data });
-    } catch (error) {
-      console.error(error);
-    }
-    
-  };
+    const getSurvey = async () => {
+      try {
+        const res = await axios.get("https://run.mocky.io/v3/2d2f2eb1-c4d3-4335-a130-68f6c9150dd2");
+        const data = res.data.data.questions;
+        const dataNormalize= data.map(question => {
+           const questionstextopcmultiple= question.questionstextopcmultiple.map(element => {
+            return {...element,number: Number(element.number), color: "#AAAAAA", selected:false};
+            
+           });
+           return {...question,options: questionstextopcmultiple}
+        });
+        dispatch({ type: "GET_SURVEY", payload: dataNormalize });
+      } catch (error) {
+        console.error(error);
+      }
+      
+    };
+    const addSelectedAnswer = async (data) => {
+           
+      dispatch({ type: "ADD_SELECTED_ANSWER", payload: data });
+      
+      
+    };
 
 
 
   return (
     <Context.Provider
       value={{
-        survey: state.survey,
+        questions: state.questions,
+        selectedAnswers: state.selectedAnswers,
         getSurvey,
+        addSelectedAnswer
       }}
     >
       {children}

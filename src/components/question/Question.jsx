@@ -1,13 +1,13 @@
-import SvgStarts from "./SvgStarts";
+import SvgStars from "../star/SvgStars";
 import style from "./question.module.scss";
 
-function Question({survey}) {
-    const {question, questionstextopcmultiple} = survey;
+function Question(params) {
+    const {question, options} = params.question;
     return (
         <>
-            <p> {question} </p>
-            <span>
-                 <SvgStarts color="#000" responseOptions={questionstextopcmultiple}/>
+            <p className={style.p}> {question} </p>
+            <span className={style.span}>
+                 <SvgStars question={params.question} responseOptions={options} />
             </span>
         </>
 

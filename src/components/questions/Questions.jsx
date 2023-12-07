@@ -6,7 +6,6 @@ import Question from "../question/Question";
 function Questions() {
 
     const useGlobalStateSurvey = useGlobalState();
-    
     useEffect(() => {
         
         useGlobalStateSurvey.getSurvey();
@@ -14,19 +13,19 @@ function Questions() {
 
             
     return (
-        <>
+        <div className={style.grid_questions}>
             {
-                useGlobalStateSurvey.survey?.map((survey,i) =>{       
+                useGlobalStateSurvey.questions?.map((question,i) =>{       
                     return (
                         <div className={style.questions} key={i}>
-                           <Question survey={survey} />
+                           <Question question={question}  i={i}/>
                         </div>
         
                     )
                 })      
              }
                 
-        </>
+        </div>
 
        
     );
