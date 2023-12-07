@@ -1,0 +1,2 @@
+export const COLOR_STAR_SELECTED = "#E8D959";
+export const COLOR_STAR_NOT_SELECTED = "#AAAAAA";
