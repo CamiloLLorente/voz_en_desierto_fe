@@ -1,4 +1,9 @@
 import {COLOR_STAR_NOT_SELECTED, COLOR_STAR_SELECTED} from "../config/config"
+import {URL_SIFINCA_CTG,URL_SIFINCA_DEMO,URL_SIFINCA_MTR} from "../config/config"
+import axios from "axios";
+import { GET_SURVEY, SET_URL_BASE_DESTINATION } from "../config/type";
+
+
 
 export const surveyUpdate = (state, action) => {
 
@@ -29,3 +34,50 @@ export const surveyUpdate = (state, action) => {
     return newSurvey;
 
 }
+
+export const getUrl = (city) =>{
+    console.log(city)
+
+    const urlBase = {
+        c:URL_SIFINCA_CTG,
+        m:URL_SIFINCA_MTR,
+        d:URL_SIFINCA_DEMO
+    }
+    if(!urlBase.hasOwnProperty(city)){
+        return "URL NO FOUND"
+    }
+
+    return urlBase[city];
+}
+
+
+export const getSurveyService = async (id,city, dispatch) => {
+    const urlBaseDestination = getUrl(city);
+    let surveyId = id;
+      dispatch({ 
+          type: SET_URL_BASE_DESTINATION,
+          payload: urlBaseDestination
+      });
+    try {
+      const res = await axios.get(`${urlBaseDestination}/catchment/main/review/survey/${surveyId}`);
+      const data = res.data.data.questions;
+      const id = res.data.data.id;
+      const dataNormalize= data.map(question => {
+         const questionstextopcmultiple= question.questionstextopcmultiple.map(element => {
+          return {...element,number: Number(element.number), color: "#AAAAAA", selected:false};
+          
+         });
+         return {...question,options: questionstextopcmultiple}
+      });
+      dispatch({ 
+                  type: GET_SURVEY,
+                  payload: {
+                    dataNormalize, 
+                    id
+                  }
+              });
+    } catch (error) {
+      console.error(error);
+    }
+    
+  };
