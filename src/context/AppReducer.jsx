@@ -1,4 +1,4 @@
-import {GET_SURVEY, ADD_SELECTED_ANSWER} from "../config/type"
+import {GET_SURVEY, ADD_SELECTED_ANSWER, SET_URL_BASE_DESTINATION} from "../config/type"
 import {surveyUpdate} from "../service/surveyService"
 
 export default (state, action) => {
@@ -7,7 +7,13 @@ export default (state, action) => {
     case GET_SURVEY:
       return {
         ...state,
-        questions: action.payload,
+        surveyId: action.payload.id,
+        questions: action.payload.dataNormalize,
+      };
+    case SET_URL_BASE_DESTINATION:
+      return {
+        ...state,
+        urlBaseDestination: action.payload,
       };
     case ADD_SELECTED_ANSWER:  
       const newSurvey = surveyUpdate(state, action) 
