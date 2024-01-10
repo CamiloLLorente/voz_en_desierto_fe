@@ -3,12 +3,12 @@ import { useGlobalState } from "../../context/GlobalState";
 import style from "./questions.module.scss";
 import Question from "../question/Question";
 
-function Questions() {
+function Questions({id,city}) {
 
     const useGlobalStateSurvey = useGlobalState();
     useEffect(() => {
         
-        useGlobalStateSurvey.getSurvey();
+        useGlobalStateSurvey.getSurvey(id, city);
     }, []);
 
             
