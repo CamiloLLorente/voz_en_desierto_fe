@@ -61,7 +61,13 @@ export const getSurveyService = async (id,city, dispatch) => {
     try {
       const res = await axios.get(`${urlBaseDestination}/catchment/main/review/survey/${surveyId}`);
       const data = res.data.data.questions;
-      const id = res.data.data.id;
+      
+      const id = res.data?.data?.id; 
+      const status = res.data?.data?.status?.content; 
+      if (id === undefined || status === undefined) {
+        alert("Error al recibir los datos")
+        return;
+      }
       const dataNormalize= data.map(question => {
          const questionstextopcmultiple= question.questionstextopcmultiple.map(element => {
           return {...element,number: Number(element.number), color: "#AAAAAA", selected:false};
