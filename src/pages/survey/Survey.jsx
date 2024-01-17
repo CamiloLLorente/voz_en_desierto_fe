@@ -10,6 +10,7 @@ function Survey() {
    
   const { id,city } = useParams();    
   const useGlobalStateSurvey = useGlobalState();
+ 
   const handleClickSurvey = async() => {
     useGlobalStateSurvey.sendAnswer()
     
@@ -18,11 +19,20 @@ function Survey() {
 
     return (
         <div className={style.survey}>
-          <SurveyHeader />
-          <Questions id ={id} city={city}/>
-          <div className={style.center}>
-            <Button color="primary" text="Enviar" onClick={handleClickSurvey} />
-          </div>
+          {useGlobalStateSurvey.status != 'Completado' ? 
+            (
+              <div>
+
+                <SurveyHeader />
+                <Questions id ={id} city={city}/>
+                <div className={style.center}>
+                  <Button color="primary" text="Enviar" onClick={handleClickSurvey} />
+                </div>
+              </div>
+            ) :
+            (<div className={style.msg}>Su encuesta ya fue completada ¡Gracias!</div>)
+          }
+         
         </div>
     );
 }
