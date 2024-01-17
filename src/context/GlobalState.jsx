@@ -1,7 +1,7 @@
 import { useContext, useReducer, createContext } from "react";
 import AppReducer from "./AppReducer";
 import axios from "axios";
-import { GET_SURVEY } from "../config/type";
+import { GET_SURVEY, ADD_SELECTED_ANSWER, SEND_SURVEY } from "../config/type";
 import {getSurveyService} from "../service/surveyService"
 import {initialState} from './initialState'
 
@@ -23,22 +23,25 @@ export const GlobalProvider = ({ children }) => {
   const getSurvey = async (id,city) => {
     getSurveyService(id, city, dispatch);
   }
-  const addSelectedAnswer = async (data) => {
-          
-    dispatch({ type: "ADD_SELECTED_ANSWER", payload: data });
-    
+  const addSelectedAnswer = async (data) => {      
+    dispatch({ type: ADD_SELECTED_ANSWER, payload: data });
     
   };
   const sendAnswer = async () => {
-    const {surveyId, questions} = state;
+    const {surveyId, questions, urlBaseDestination} = state;
     try {
-      const urlBase = "https://run.mocky.io/v3/2d2f2eb1-c4d3-4335-a130-68f6c9150dd2/"
-      const url = urlBase+surveyId
-      const res = await axios.post(url,questions);
+      const urlBase = urlBaseDestination
+      const url = `${urlBase}/catchment/main/review/complete/review/survey`
+      const data = {
+        id: surveyId,
+        questions: questions
+      }
+      const res = await axios.put(url,data);
+      console.log(res);
       
       dispatch({ 
-                  type: GET_SURVEY,
-                  payload: res
+                  type: SEND_SURVEY,
+                  payload: res.data.status
               });
     } catch (error) {
       console.error(error);
@@ -49,6 +52,7 @@ export const GlobalProvider = ({ children }) => {
     <Context.Provider
       value={{
         questions: state.questions,
+        status: state.status,
         selectedAnswers: state.selectedAnswers,
         surveyId: state.surveyId,
         urlBaseDestination: state.urlBaseDestination,
