@@ -36,7 +36,6 @@ export const surveyUpdate = (state, action) => {
 }
 
 export const getUrl = (city) =>{
-    console.log(city)
 
     const urlBase = {
         c:URL_SIFINCA_CTG,
@@ -79,7 +78,8 @@ export const getSurveyService = async (id,city, dispatch) => {
                   type: GET_SURVEY,
                   payload: {
                     dataNormalize, 
-                    id
+                    id, 
+                    status
                   }
               });
     } catch (error) {
